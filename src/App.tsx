@@ -1,24 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import {
+  Checkbox,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 
 function App() {
+  const [selectedLocations, setSelectedLocations] = useState<number[]>([]);
+
+  const handleChange = (event: any) => {
+    console.log(event);
+    const {
+      target: { value },
+    } = event;
+    console.log(value);
+    setSelectedLocations(value);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <h1>Global Entry Checker</h1>
+      <FormControl sx={{ width: "75%" }}>
+        <InputLabel id="demo-simple-select-label">Locations</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={selectedLocations}
+          label="Locations"
+          onChange={handleChange}
+          multiple
+          renderValue={(selected) => selected.join(", ")}
         >
-          Learn React
-        </a>
-      </header>
+          <MenuItem value={10}>
+            <div>Ten</div>
+            <Checkbox checked={selectedLocations.indexOf(10) > -1} />
+          </MenuItem>
+          <MenuItem value={20}>
+            <div>Twenty</div>
+            <Checkbox checked={selectedLocations.indexOf(20) > -1} />
+          </MenuItem>
+          <MenuItem value={30}>
+            <div>Thirty</div>
+            <Checkbox checked={selectedLocations.indexOf(30) > -1} />
+          </MenuItem>
+        </Select>
+      </FormControl>
     </div>
   );
 }
